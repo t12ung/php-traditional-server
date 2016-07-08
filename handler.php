@@ -46,9 +46,11 @@ class UploadHandler {
         return $this->uploadName;
     }
 
-    public function combineChunks($uploadDirectory) {
+    public function combineChunks($uploadDirectory, $name = null) {
         $uuid = $_POST['qquuid'];
-        $name = $this->getName();
+        if ($name === null){
+            $name = $this->getName();
+        }
         $targetFolder = $this->chunksFolder.DIRECTORY_SEPARATOR.$uuid;
         $totalParts = isset($_REQUEST['qqtotalparts']) ? (int)$_REQUEST['qqtotalparts'] : 1;
 
