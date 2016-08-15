@@ -1,4 +1,6 @@
-# php-traditional-server
+# PHP Traditional Endpoint Server
+
+[![license](https://img.shields.io/badge/license-MIT-brightgreen.svg)](LICENSE)
 [![Packagist](https://img.shields.io/packagist/dt/fineuploader/php-traditional-server.svg?maxAge=2592000)](https://packagist.org/packages/fineuploader/php-traditional-server)
 
 PHP-based server-side example for handling traditional endpoint requests from Fine Uploader
