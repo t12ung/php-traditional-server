@@ -134,6 +134,11 @@ class UploadHandler {
             $name = $this->getName();
         }
 
+        // check file error
+        if($file['error']) {
+            return array('error' => 'Upload Error #'.$file['error']);
+        }
+        	
         // Validate name
         if ($name === null || $name === ''){
             return array('error' => 'File name empty.');
