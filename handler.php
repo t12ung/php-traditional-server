@@ -222,9 +222,19 @@ class UploadHandler {
         }
 
         $targetFolder = $uploadDirectory;
-        $url = parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH);
-        $tokens = explode('/', $url);
-        $uuid = $tokens[sizeof($tokens)-1];
+        $uuid = false;
+        $method = $_SERVER["REQUEST_METHOD"];
+	    if ($method == "DELETE") {
+            $url = parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH);
+            $tokens = explode('/', $url);
+            $uuid = $tokens[sizeof($tokens)-1];
+        } else if ($method == "POST") {
+            $uuid = $_REQUEST['qquuid'];
+        } else {
+            return array("success" => false,
+                "error" => "Invalid request method! ".$method
+            );
+        }
 
         $target = join(DIRECTORY_SEPARATOR, array($targetFolder, $uuid));
 
