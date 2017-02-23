@@ -341,12 +341,18 @@ class UploadHandler {
      * @param string $str
      */
     protected function toBytes($str){
-        $val = trim($str);
+	$str = trim($str);
         $last = strtolower($str[strlen($str)-1]);
+	$val;
+	if(is_numeric($last)) {
+		$val = (int) $str;
+	} else {
+		$val = (int) substr($str, 0, -1);
+	}
         switch($last) {
-            case 'g': $val *= 1024;
-            case 'm': $val *= 1024;
-            case 'k': $val *= 1024;
+            case 'g': case 'G': $val *= 1024;
+            case 'm': case 'M': $val *= 1024;
+            case 'k': case 'K': $val *= 1024;
         }
         return $val;
     }
