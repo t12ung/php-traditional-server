@@ -1,6 +1,20 @@
 {
-    "name": "fineuploader/php-traditional-server",
+    "name": "t12ung/php-traditional-server",
+    "version": "1.2.2",
     "description": "Endpoint handler for Fine Uploader's traditional server requests.",
     "homepage": "http://fineuploader.com",
-    "license": "MIT"
+    "support": {
+        "issues": "https://github.com/t12ung/php-traditional-server/issues",
+        "source": "https://github.com/t12ung/php-traditional-server"
+    },
+    "repositories": [
+        {
+            "type": "vcs",
+            "url": "https://github.com/t12ung/php-traditional-server"
+        }
+    ],
+    "license": "MIT",
+    "require": {
+        "php": ">=5.6"
+    }
 }
