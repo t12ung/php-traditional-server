@@ -6,6 +6,8 @@
  * file(s).
  */
 
+namespace FineUploader;
+
 class UploadHandler {
 
     public $allowedExtensions = array();

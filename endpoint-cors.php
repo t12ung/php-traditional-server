@@ -127,7 +127,7 @@ else if ($method == "DELETE") {
     // window.postMessage
     if ($iframeRequest == true) {
         header("Content-Type: text/html");
-        echo json_encode($result)."<script src='http://10.0.2.2/jquery.fineuploader-4.1.1/iframe.xss.response-4.1.1.js'></script>";
+        echo json_encode($result)."<script src='/node_modules/fine-uploader/fine-uploader/iframe.xss.response.js'></script>";
     } else {
         echo json_encode($result);
     }
@@ -155,7 +155,7 @@ else if ($method == "POST") {
         // window.postMessage
         if ($iframeRequest == true) {
             header("Content-Type: text/html");
-            echo json_encode($result)."<script src='http://{{SERVER_URL}}/{{FINE_UPLOADER_FOLDER}}/iframe.xss.response.js'></script>";
+            echo json_encode($result)."<script src='/node_modules/fine-uploader/fine-uploader/iframe.xss.response.js'></script>";
         } else {
             echo json_encode($result);
         }
