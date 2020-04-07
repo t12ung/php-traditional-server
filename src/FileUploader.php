@@ -37,6 +37,10 @@ class FileUploader
     private $uploader;
     private $_HEADERS;
     private $uploadFolder = 'files';
+    private $callback = [
+        'upload' => null,
+        'delete' => null
+    ];
     public $method;
 
     public function __construct()
@@ -75,7 +79,22 @@ class FileUploader
 
             if (!empty($config['uploadFolder']) && is_string($config['uploadFolder'])) {
                 // The directory used to save uploads to, default "files"
-                $this->uploadFolder = $config['uploadFolder'];
+                $this->uploadFolder = rtrim($config['uploadFolder'], DIRECTORY_SEPARATOR);
+            }
+
+            if (!empty($config['callback']) && is_array($config['callback'])) {
+                // The callback methods to execute on the file before sending a response.
+                // The uploaded destination filepath is passed as the first parameter automatically,
+                // followed by any other defined callback parameters.
+                // Example structure: 'upload' => ['callback' => <callable type>, 'param' => <single param or array>]
+                $callback = $config['callback'];
+                foreach ($callback as $method => $c) {
+                    if ( in_array($method, array_keys($this->callback)) && !empty($c['callable']) ) {
+                        if (is_callable($c['callable'])) {
+                            $this->callback[$method] = $c;
+                        }
+                    }
+                }
             }
 
         } else {
@@ -193,6 +212,18 @@ class FileUploader
             else {
                 // Call handleUpload() with the name of the folder, relative to PHP's getcwd()
                 $result = $this->uploader->handleUpload($this->uploadFolder);
+
+                $callback = $this->callback[__FUNCTION__];
+                if ($callback && !empty($callback['callable'])) {
+                    $file = $this->uploader->getTargetFilePath($this->uploadFolder);
+                    $func = $callback['callable'];
+                    $param = $callback['param'] ?? [];
+                    if ($param && !is_array($param)) $param = [$param];
+                    array_unshift($param, $file);
+
+                    $return = call_user_func_array($func, $param);
+                    if ($return !== true) $result = $return;
+                }
 
                 // To return a name used for uploaded file you can use the following line.
                 $result["uploadName"] = $this->uploader->getUploadName();

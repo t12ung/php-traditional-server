@@ -88,6 +88,12 @@ class UploadHandler {
         return array("success" => true, "uuid" => $uuid);
     }
 
+    public function getTargetFilePath($uploadDirectory) {
+        $uuid = $_POST['qquuid'];
+        $target = join(DIRECTORY_SEPARATOR, [$uploadDirectory, $uuid, $this->getUploadName()]);
+        return $target;
+    }
+
     /**
      * Process the upload.
      * @param string $uploadDirectory Target directory.
